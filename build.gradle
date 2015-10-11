@@ -5,15 +5,34 @@ buildscript {
     dependencies {
         classpath "io.ratpack:ratpack-gradle:1.0.0"
         classpath "com.github.jengelman.gradle.plugins:shadow:1.2.2"
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
 }
 
 apply plugin: "io.ratpack.ratpack-groovy"
 apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: 'docker'
+
 
 repositories {
     jcenter()
 }
 
-defaultTasks 'clean', 'shadowJar'
+defaultTasks 'clean', 'shadowJar', 'buildDocker'
 
+group = 'whamondg'
+
+docker {
+    baseImage "library/java:latest"
+    maintainer 'Gordon Whamond "gordon.whamond@googlemail.com"'
+}
+
+task buildDocker(type: Docker) {
+    def serviceName = 'dozy-service'
+    applicationName = serviceName
+    runCommand "mkdir /$serviceName"
+    workingDir serviceName
+    addFile( "build/libs/${serviceName}-all.jar", "${serviceName}/${serviceName}.jar")
+    exposePort 5050
+    defaultCommand(["java", "-jar","${serviceName}/${serviceName}.jar"])
+}
