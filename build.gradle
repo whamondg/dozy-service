@@ -20,7 +20,7 @@ repositories {
 
 defaultTasks 'clean', 'shadowJar', 'buildDocker'
 
-group = 'whamondg'
+group = 'gordonw'
 
 docker {
     baseImage "library/java:latest"
