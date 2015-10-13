@@ -9,10 +9,13 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.jfrog.bintray" version "1.3.1"
+}
+
 apply plugin: "io.ratpack.ratpack-groovy"
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'docker'
-
 
 repositories {
     jcenter()
@@ -20,7 +23,26 @@ repositories {
 
 defaultTasks 'clean', 'shadowJar', 'buildDocker'
 
-group = 'gordonw'
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    filesSpec {
+      from 'build/libs'
+      into 'whamondg/'
+    }
+    pkg {
+        repo = 'generic'
+        name = 'dozy-service'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/whamondg/dozy-service.git'
+        version {
+           name = '0.0.1'
+           released  = new Date()
+        }
+    }
+}
+
+group = 'whamondg'
 
 docker {
     baseImage "library/java:latest"
