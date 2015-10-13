@@ -20,5 +20,5 @@ deployment:
   hub:
     branch: master
     commands:
-      - curl -X GET -uwhamondg:$BINTRAY_KEY https://whamondg-docker-dozy-service.bintray.io/v1/auth > ~/.dockercfg
+      - docker login -u whamondg -p $BINTRAY_KEY -e $DOCKER_EMAIL whamondg-docker-registry.bintray.io
       - docker push whamondg/dozy-service
