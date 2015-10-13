@@ -21,4 +21,4 @@ deployment:
     branch: master
     commands:
       - docker login -u whamondg -p $BINTRAY_KEY -e $DOCKER_EMAIL whamondg-docker-registry.bintray.io
-      - docker push whamondg/dozy-service
+      - docker push whamondg-docker-registry.bintray.io/whamondg/dozy-service
