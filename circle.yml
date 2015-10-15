@@ -22,4 +22,4 @@ deployment:
     commands:
       - docker login -u whamondg -p $BINTRAY_KEY -e $DOCKER_EMAIL whamondg-docker-registry.bintray.io
       - docker tag whamondg/dozy-service whamondg-docker-registry.bintray.io/dozy-service
-      - docker push whamondg-docker-registry.bintray.io/dozy-service
+      - docker push whamondg-docker-registry.bintray.io/dozy-service:$CIRCLE_SHA1
