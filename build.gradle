@@ -31,7 +31,7 @@ bintray {
       into 'whamondg/'
     }
     pkg {
-        repo = 'generic'
+        repo = 'maven'
         name = 'dozy-service'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/whamondg/dozy-service.git'
