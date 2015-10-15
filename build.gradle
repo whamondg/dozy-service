@@ -21,7 +21,7 @@ repositories {
     jcenter()
 }
 
-defaultTasks 'clean', 'shadowJar', 'buildDocker'
+defaultTasks 'clean', 'shadowJar', 'bintrayUpload', 'buildDocker'
 
 bintray {
     user = System.getenv('BINTRAY_USER')
