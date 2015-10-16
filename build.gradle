@@ -23,6 +23,17 @@ repositories {
 
 defaultTasks 'clean', 'shadowJar', 'bintrayUpload', 'buildDocker'
 
+def getVersionName = {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = stdout
+    }
+    stdout.toString().trim()
+}
+
+def VERSION = getVersionName
+
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
@@ -36,7 +47,7 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/whamondg/dozy-service.git'
         version {
-           name = '0.0.1'
+           name = VERSION
            released  = new Date()
         }
     }
@@ -49,7 +60,12 @@ docker {
     maintainer 'Gordon Whamond "gordon.whamond@googlemail.com"'
 }
 
+task versionFile {
+    new File('VERSION').text = VERSION
+}
+
 task buildDocker(type: Docker) {
+    dependsOn('versionFile')
     def serviceName = 'dozy-service'
     applicationName = serviceName
     runCommand "mkdir /$serviceName"
