@@ -21,7 +21,7 @@ repositories {
     jcenter()
 }
 
-defaultTasks 'clean', 'shadowJar' 'bintrayUpload', 'buildDocker'
+defaultTasks 'clean', 'shadowJar', 'bintrayUpload', 'buildDocker'
 
 def getVersionName = {
     def stdout = new ByteArrayOutputStream()
