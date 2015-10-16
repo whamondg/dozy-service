@@ -21,7 +21,7 @@ repositories {
     jcenter()
 }
 
-defaultTasks 'clean', 'shadowJar', 'bintrayUpload', 'buildDocker'
+defaultTasks 'clean', 'shadowJar' 'bintrayUpload', 'buildDocker'
 
 def getVersionName = {
     def stdout = new ByteArrayOutputStream()
@@ -32,14 +32,15 @@ def getVersionName = {
     stdout.toString().trim()
 }
 
-def VERSION = getVersionName
+group = 'whamondg'
+version = getVersionName()
 
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
     filesSpec {
-      from 'build/libs'
-      into 'whamondg/'
+        from 'build/libs'
+        into 'whamondg/'
     }
     pkg {
         repo = 'maven'
@@ -47,13 +48,11 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/whamondg/dozy-service.git'
         version {
-           name = VERSION
+           name = project.version
            released  = new Date()
         }
     }
 }
-
-group = 'whamondg'
 
 docker {
     baseImage "library/java:latest"
@@ -61,7 +60,7 @@ docker {
 }
 
 task versionFile {
-    new File('VERSION').text = VERSION
+    new File('VERSION').text = version
 }
 
 task buildDocker(type: Docker) {
@@ -74,3 +73,4 @@ task buildDocker(type: Docker) {
     exposePort 5050
     defaultCommand(["java", "-jar","${serviceName}/${serviceName}.jar"])
 }
+
