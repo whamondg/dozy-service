@@ -9,7 +9,7 @@ checkout:
 
 test:
   override:
-    - docker run -d -p 5050:5050 whamondg/dozy-service; sleep 10
+    - docker run -d -p 5050:5050 whamondg/dozy-service:`cat VERSION`; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://localhost:5050
 
 deployment:
