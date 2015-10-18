@@ -17,5 +17,5 @@ deployment:
     branch: master
     commands:
       - docker login -u whamondg -p $BINTRAY_KEY -e $DOCKER_EMAIL whamondg-docker-registry.bintray.io
-      - docker tag whamondg/dozy-service whamondg-docker-registry.bintray.io/dozy-service:$CIRCLE_SHA1
-      - docker push whamondg-docker-registry.bintray.io/dozy-service:$CIRCLE_SHA1
+      - docker tag whamondg/dozy-service:`cat VERSION` whamondg-docker-registry.bintray.io/dozy-service:`cat VERSION`
+      - docker push whamondg-docker-registry.bintray.io/dozy-service:`cat VERSION`
