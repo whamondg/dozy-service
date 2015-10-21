@@ -1,14 +1,17 @@
 import static ratpack.groovy.Groovy.ratpack
-import java.util.Random
+import java.util.concurrent.ThreadLocalRandom
+import ratpack.exec.Blocking;
 
-def rand = new Random()
 ratpack {
     handlers {
         get {
-            def powernap = rand.nextInt(5000)
-            println "Sleepy time: $powernap"
-            sleep(powernap)
-            response.send "Rested for: ${powernap}ms"
+            def powernap = ThreadLocalRandom.current().nextInt(5000)
+            Blocking.get {
+                println "Sleepy time: $powernap"
+                sleep(powernap)
+            } then { Integer result ->
+                context.response.send "Rested for: ${powernap}ms"
+            }
         }
     }
 }
