@@ -1,4 +1,4 @@
-Introduction
+Dozy-service
 ============
 
 Dozy-service is a simple webservice that will pause for a random amount of time before returning a response.  It was put together as a simple end-point for playing around with performance monitoring tools.
